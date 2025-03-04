@@ -11,7 +11,7 @@ function HeroSection() {
         <Grid2 size={{ md: 12, lg: 6 }}>
           <Box className="p-12 flex flex-col gap-16">
             <Typography
-              className="text-left"
+              className="text-center md:text-left"
               sx={{
                 ...theme.typography.h1,
               }}
@@ -19,7 +19,7 @@ function HeroSection() {
               Get ready for your best ever Dental Experience!
             </Typography>
             <Typography
-              className="text-left"
+              className="text-center md:text-left"
               sx={{
                 ...theme.typography.body1,
                 color: theme.palette.text.primary,
@@ -29,7 +29,7 @@ function HeroSection() {
               provide the best products to our patients, So don’t worry about
               anything and book yourself.
             </Typography>
-            <Box className="flex flex-row gap-10">
+            <Box className="flex flex-col md:flex-row gap-10">
               <Button
                 variant="contained"
                 sx={{

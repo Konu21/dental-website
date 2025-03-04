@@ -6,6 +6,7 @@ import {
   CardActions,
   Typography,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
@@ -34,6 +35,7 @@ function ServicesSection() {
       more_info_link: "link",
     },
   ];
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box
       className="w-full p-10 flex gap-15 justify-center items-center rounded-[10px]"
@@ -42,47 +44,95 @@ function ServicesSection() {
         backgroundColor: theme.palette.primary.light,
       }}
     >
-      {services.map((service, index) => (
-        <Card
-          key={index}
-          className="flex flex-col text-center w-96 rounded-[10px] items-center"
-        >
-          <CardMedia
-            sx={{ height: "6em", width: "6em" }}
-            image={service.photo}
-            title={service.title}
-          />
-          <CardContent>
-            <Typography
-              gutterBottom
-              component="div"
-              sx={{ ...theme.typography.h4 }}
+      {isMobile ? (
+        <Carousel navButtonsAlwaysVisible={true} className="w-sm">
+          {services.map((service, index) => (
+            <Card
+              key={index}
+              className="flex flex-col  text-center w-96 rounded-[10px] items-center"
             >
-              {service.title}
-            </Typography>
-            <Typography sx={{ ...theme.typography.body2 }}>
-              {service.text}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button
-              size="small"
-              component="a"
-              href={service.more_info_link}
-              sx={{
-                background: "transparent",
-                color: theme.palette.primary.dark,
-                "&:hover": {
-                  color: theme.palette.primary.dark,
-                  backgroundColor: "transparent",
-                },
-              }}
+              <CardMedia
+                sx={{ height: "5em", width: "5em" }}
+                image={service.photo}
+                title={service.title}
+              />
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  component="div"
+                  sx={{ ...theme.typography.h4 }}
+                >
+                  {service.title}
+                </Typography>
+                <Typography sx={{ ...theme.typography.body2 }}>
+                  {service.text}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  component="a"
+                  href={service.more_info_link}
+                  sx={{
+                    background: "transparent",
+                    color: theme.palette.primary.dark,
+                    "&:hover": {
+                      color: theme.palette.primary.dark,
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                >
+                  Learn More <ArrowCircleRightIcon />
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </Carousel>
+      ) : (
+        <>
+          {services.map((service, index) => (
+            <Card
+              key={index}
+              className="flex flex-col  text-center w-96 rounded-[10px] items-center "
             >
-              Learn More <ArrowCircleRightIcon />
-            </Button>
-          </CardActions>
-        </Card>
-      ))}
+              <CardMedia
+                sx={{ height: "6em", width: "6em" }}
+                image={service.photo}
+                title={service.title}
+              />
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  component="div"
+                  sx={{ ...theme.typography.h4 }}
+                >
+                  {service.title}
+                </Typography>
+                <Typography sx={{ ...theme.typography.body2 }}>
+                  {service.text}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  component="a"
+                  href={service.more_info_link}
+                  sx={{
+                    background: "transparent",
+                    color: theme.palette.primary.dark,
+                    "&:hover": {
+                      color: theme.palette.primary.dark,
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                >
+                  Learn More <ArrowCircleRightIcon />
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </>
+      )}
     </Box>
   );
 }

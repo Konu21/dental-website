@@ -48,7 +48,7 @@ function Navbar() {
         <Typography
           variant="h3"
           component={Link}
-          to="#home"
+          to="home"
           sx={{
             display: { xs: "flex" },
             mr: 2,
