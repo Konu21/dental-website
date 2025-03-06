@@ -15,13 +15,11 @@ function Home() {
     <>
       <HeroSection />
       <ServicesSection />
-      <AboutUsSection />
-      <WhyChooseUs />
       <TeamSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection />
       <ArticlesSection />
       <AppointmentCTA />
-      <ContactSection />
+      <ContactSection /> */}
     </>
   );
 }

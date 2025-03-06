@@ -7,13 +7,20 @@ function HeroSection() {
 
   return (
     <>
-      <Grid2 container spacing={2} className="mt-5 items-center">
+      <Grid2
+        container
+        spacing={2}
+        className="mt-5 items-center max-md:p-5 max-md:w-fit"
+      >
         <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box className="p-12 flex flex-col gap-16">
+          <Box className="p-2 md:p-12 flex flex-col gap-16">
             <Typography
               className="text-center md:text-left"
               sx={{
                 ...theme.typography.h1,
+                [theme.breakpoints.down("sm")]: {
+                  ...theme.typography.h2,
+                },
               }}
             >
               Get ready for your best ever Dental Experience!
@@ -37,6 +44,8 @@ function HeroSection() {
                   color: theme.palette.primary.light,
                   textTransform: "none",
                   borderRadius: "10px",
+                  width: "auto",
+                  minWidth: "fit-content",
                 }}
               >
                 Book an appointment
@@ -86,12 +95,7 @@ function HeroSection() {
           </Box>
         </Grid2>
         <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          <Box className="">
             <img src="/avatar.png" alt="" />
           </Box>
         </Grid2>
