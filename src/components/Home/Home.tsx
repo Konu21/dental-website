@@ -1,14 +1,4 @@
-import {
-  HeroSection,
-  ServicesSection,
-  AboutUsSection,
-  WhyChooseUs,
-  TeamSection,
-  TestimonialsSection,
-  ArticlesSection,
-  AppointmentCTA,
-  ContactSection,
-} from "./sections";
+import { HeroSection, ServicesSection, TeamSection } from "./sections";
 
 function Home() {
   return (
