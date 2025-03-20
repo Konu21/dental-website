@@ -1,4 +1,9 @@
-import { HeroSection, ServicesSection, TeamSection } from "./sections";
+import {
+  HeroSection,
+  ServicesSection,
+  TeamSection,
+  FAQSection,
+} from "./sections";
 
 function Home() {
   return (
@@ -6,10 +11,7 @@ function Home() {
       <HeroSection />
       <ServicesSection />
       <TeamSection />
-      {/* <TestimonialsSection />
-      <ArticlesSection />
-      <AppointmentCTA />
-      <ContactSection /> */}
+      <FAQSection />
     </>
   );
 }

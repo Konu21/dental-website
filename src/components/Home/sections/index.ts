@@ -3,7 +3,4 @@ export { default as ServicesSection } from "./ServicesSection";
 export { default as AboutUsSection } from "./AboutUsSection";
 export { default as WhyChooseUs } from "./WhyChooseUs";
 export { default as TeamSection } from "./TeamSection";
-export { default as TestimonialsSection } from "./TestimonialsSection";
-export { default as ArticlesSection } from "./ArticlesSection";
-export { default as AppointmentCTA } from "./AppointmentCTA";
-export { default as ContactSection } from "./ContactSection";
+export { default as FAQSection } from "./FAQSection";
