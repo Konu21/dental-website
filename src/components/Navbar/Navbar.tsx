@@ -9,7 +9,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./Navbar.css";
@@ -17,17 +17,17 @@ import "./Navbar.css";
 function Navbar() {
   const theme = useTheme(); // Accesează tema MUI
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
+  const location = useLocation();
+  const isHome = location.pathname === "/" || location.pathname === "/home";
 
   const navItemsBigScreen = [
     { to: "home", label: "Home", id: "home" },
     { to: "service", label: "Service", id: "service" },
-    { to: "blogs", label: "Blogs", id: "blogs" },
     { to: "about", label: "About", id: "about" },
   ];
   const navItemsSmallScreen = [
     { to: "home", label: "Home", id: "home" },
     { to: "service", label: "Service", id: "service" },
-    { to: "blogs", label: "Blogs", id: "blogs" },
     { to: "about", label: "About", id: "about" },
     { to: "contact", label: "Contact", id: "contact" },
   ];
@@ -36,10 +36,12 @@ function Navbar() {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: {
-          xs: "transparent",
-          lg: theme.palette.primary.light,
-        },
+        backgroundColor: isHome ? theme.palette.primary.light : "white",
+        color: isHome ? "white" : theme.palette.primary.main,
+        // {
+        //   xs: "transparent",
+        //   lg: theme.palette.primary.light,
+        // },
         boxShadow: { xs: "none" },
       }}
       className="rounded-[10px] "
@@ -82,7 +84,7 @@ function Navbar() {
           <Button
             key="contact"
             component={Link}
-            to="#contact"
+            to="contact"
             sx={{
               display: { xs: "none", lg: "flex" },
               color: theme.palette.primary.light,
