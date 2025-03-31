@@ -1,8 +1,9 @@
 import { Box, useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import { AnimatePresence, motion, wrap } from "motion/react";
 
 import { useTheme } from "@mui/material/styles";
 import ServiceCard from "./ServiceCard";
-import Carousel from "react-material-ui-carousel";
 
 function ServicesSection() {
   const theme = useTheme();
@@ -27,23 +28,72 @@ function ServicesSection() {
     },
   ];
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [selectedItem, setSelectedItem] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+
+  function setSlide(newDirection: 1 | -1) {
+    const nextItem = wrap(0, services.length, selectedItem + newDirection);
+    setSelectedItem(nextItem);
+    setDirection(newDirection);
+  }
   return (
-    <Box
-      className="w-full flex justify-center items-center p-5 md:p-15 md:rounded-[10px]"
-      sx={{ backgroundColor: theme.palette.primary.light }}
+    // <Box>
+    <motion.div
+      className="w-full relative flex justify-center items-center sm:p-5 md:p-15 md:rounded-[10px]"
+      style={{
+        backgroundColor: theme.palette.primary.light,
+      }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 50 }}
+      viewport={{ margin: "-15% 0px -15% 0px", once: false }}
+      transition={{
+        type: "spring",
+        duration: 0.8,
+        ease: "easeInOut",
+      }}
     >
       {isMobile ? (
-        <Carousel
-          navButtonsAlwaysVisible={true}
-          indicators={false}
-          className="w-full max-w-sm pb-10"
-        >
-          {services.map((service, index) => (
-            <ServiceCard key={index} service={service} theme={theme} />
-          ))}
-        </Carousel>
+        <Box className="flex relative justify-center items-center w-full rounded-[20px] max-w-sm h-[400px] overflow-hidden">
+          <motion.button
+            initial={false}
+            aria-label="Previous"
+            className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 left-5 -translate-y-1/2 z-10 outline-offset-2"
+            onClick={() => setSlide(-1)}
+            whileFocus={{ outline: "2px solid #0cdcf7" }}
+          >
+            <ArrowLeft />
+          </motion.button>
+          <Box className="relative w-full max-w-sm h-[400px] flex justify-center items-center overflow-hidden">
+            <AnimatePresence
+              custom={direction}
+              initial={false}
+              mode="popLayout"
+            >
+              <motion.div
+                key={selectedItem}
+                initial={{ opacity: 0, x: direction * 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -50 }}
+                transition={{ delay: 0.2, type: "spring", bounce: 0.4 }}
+                className="absolute w-full h-full flex justify-center items-center"
+              >
+                <ServiceCard service={services[selectedItem]} theme={theme} />
+              </motion.div>
+            </AnimatePresence>
+          </Box>
+          <motion.button
+            initial={false}
+            aria-label="Next"
+            className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 left-5 -translate-y-1/2 z-10 outline-offset-2"
+            onClick={() => setSlide(1)}
+            whileFocus={{ outline: "2px solid #0cdcf7" }}
+          >
+            <ArrowRight />
+          </motion.button>
+        </Box>
       ) : (
-        <Box className="w-full flex flex-wrap justify-center gap-5">
+        <Box className="w-full flex flex-wrap justify-center gap-10">
           {services.map((service, index) => (
             <div
               key={index}
@@ -54,8 +104,46 @@ function ServicesSection() {
           ))}
         </Box>
       )}
-    </Box>
+    </motion.div>
+    //</Box>
   );
 }
 
 export default ServicesSection;
+function ArrowLeft() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 19-7-7 7-7" />
+      <path d="M19 12H5" />
+    </svg>
+  );
+}
+
+function ArrowRight() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
+  );
+}

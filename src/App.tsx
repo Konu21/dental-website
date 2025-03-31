@@ -2,6 +2,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import { Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import * as motion from "motion/react-client";
 
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -14,11 +15,21 @@ import Layout from "./components/Layout";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Box className="p-0 m-0 min-h-screen bg-inherit">
+      <div className="p-0 m-0 min-h-screen bg-inherit">
         <Router>
           <Layout>
-            <Box className="lg:p-12 pt-5">
-              <Navbar />
+            <Box className="lg:px-12 pt-5">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeInOut",
+                  delay: 0.3,
+                }}
+              >
+                <Navbar />
+              </motion.div>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
@@ -29,7 +40,7 @@ function App() {
             </Box>
           </Layout>
         </Router>
-      </Box>
+      </div>
     </ThemeProvider>
   );
 }

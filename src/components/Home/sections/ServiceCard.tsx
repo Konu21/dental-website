@@ -18,9 +18,9 @@ interface Service {
 
 function ServiceCard({ service, theme }: { service: Service; theme: Theme }) {
   return (
-    <Card className="flex flex-col text-center rounded-[10px] items-center">
+    <Card className="flex flex-col text-center rounded-[20px] items-center">
       <CardMedia
-        sx={{ height: "6em", width: "6em" }}
+        sx={{ height: "5em", width: "5em" }}
         image={service.photo}
         title={service.title}
       />
@@ -32,7 +32,13 @@ function ServiceCard({ service, theme }: { service: Service; theme: Theme }) {
         >
           {service.title}
         </Typography>
-        <Typography sx={{ ...theme.typography.body2 }}>
+        <Typography
+          sx={{
+            fontSize: "1rem",
+            lineHeight: "100%",
+            fontWeight: 400,
+          }}
+        >
           {service.text}
         </Typography>
       </CardContent>
