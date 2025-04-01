@@ -11,13 +11,14 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <Box
       sx={{
+        padding: 0,
+        margin: 0,
         minHeight: "100vh",
         backgroundColor: isHome ? "white" : theme.palette.primary.light,
         backgroundImage: isHome
           ? "none"
           : `linear-gradient(to bottom, ${theme.palette.primary.light}, ${theme.palette.background.default})`,
         //   backgroundColor: isHome ? "transparent" : "white",
-        padding: 4,
       }}
     >
       {children}

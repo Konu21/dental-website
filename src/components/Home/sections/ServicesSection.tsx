@@ -1,7 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { AnimatePresence, motion, wrap } from "motion/react";
-
+import { ArrowLeft, ArrowRight } from "./arrows";
 import { useTheme } from "@mui/material/styles";
 import ServiceCard from "./ServiceCard";
 
@@ -37,7 +37,6 @@ function ServicesSection() {
     setDirection(newDirection);
   }
   return (
-    // <Box>
     <motion.div
       className="w-full relative flex justify-center items-center sm:p-5 md:p-15 md:rounded-[10px]"
       style={{
@@ -46,7 +45,7 @@ function ServicesSection() {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 50 }}
-      viewport={{ margin: "-15% 0px -15% 0px", once: false }}
+      viewport={{ margin: "-15% 0px -15% 0px", once: true }}
       transition={{
         type: "spring",
         duration: 0.8,
@@ -105,45 +104,7 @@ function ServicesSection() {
         </Box>
       )}
     </motion.div>
-    //</Box>
   );
 }
 
 export default ServicesSection;
-function ArrowLeft() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m12 19-7-7 7-7" />
-      <path d="M19 12H5" />
-    </svg>
-  );
-}
-
-function ArrowRight() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  );
-}

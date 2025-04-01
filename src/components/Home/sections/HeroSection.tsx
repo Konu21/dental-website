@@ -20,7 +20,7 @@ function HeroSection() {
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
               transition={{ duration: 0.8 }}
             >
               <Typography
@@ -39,7 +39,7 @@ function HeroSection() {
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <Typography
@@ -58,7 +58,7 @@ function HeroSection() {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ y: 0, opacity: 1 }}
               exit={{ opacity: 0, y: 50 }}
-              viewport={{ margin: "-25% 0px -5% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -5% 0px", once: true }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <Box className="flex flex-col md:flex-row gap-10">
@@ -126,7 +126,7 @@ function HeroSection() {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ x: 0, opacity: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
               transition={{ duration: 2, ease: "easeInOut" }}
             >
               <img src="/avatar.png" alt="Dentist Avatar" loading="lazy" />

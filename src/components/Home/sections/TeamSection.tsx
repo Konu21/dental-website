@@ -31,7 +31,7 @@ function TeamSection() {
                 whileInView={{ x: 0, opacity: 1 }}
                 exit={{ x: -100, opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+                viewport={{ margin: "-25% 0px -25% 0px", once: true }}
               >
                 <Typography
                   className="text-center md:text-left"
@@ -52,7 +52,7 @@ function TeamSection() {
               whileInView={{ x: 0, opacity: 1 }}
               exit={{ x: -100, opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -73,7 +73,7 @@ function TeamSection() {
                 whileInView={{ y: 0, opacity: 1 }}
                 exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                viewport={{ margin: "-25% 0px -5% 0px", once: false }}
+                viewport={{ margin: "-25% 0px -5% 0px", once: true }}
                 className="flex flex-col md:flex-row gap-5 text-center items-center self-center"
               >
                 <MuiTelInput
@@ -104,7 +104,7 @@ function TeamSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: false }}
+              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
             >
               <img src="/patient.svg" alt="patient" loading="lazy" />
             </motion.div>

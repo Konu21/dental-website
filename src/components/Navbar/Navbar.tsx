@@ -8,6 +8,7 @@ import {
   IconButton,
   Button,
   Box,
+  useMediaQuery,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -19,6 +20,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "/home";
+  const isBelowLg = useMediaQuery(theme.breakpoints.down("lg"));
 
   const navItemsBigScreen = [
     { to: "home", label: "Home", id: "home" },
@@ -36,8 +38,16 @@ function Navbar() {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: isHome ? theme.palette.primary.light : "white",
-        color: isHome ? "white" : theme.palette.primary.main,
+        backgroundColor: isBelowLg
+          ? "white"
+          : isHome
+          ? theme.palette.primary.light
+          : "white",
+        color: isBelowLg
+          ? "black"
+          : isHome
+          ? "white"
+          : theme.palette.primary.main,
         // {
         //   xs: "transparent",
         //   lg: theme.palette.primary.light,
@@ -104,7 +114,7 @@ function Navbar() {
             aria-label="menu"
             onClick={(e) => setAnchorElNav(e.currentTarget)}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ fontSize: "2em" }} />
           </IconButton>
 
           <Menu
