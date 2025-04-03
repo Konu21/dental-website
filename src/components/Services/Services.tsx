@@ -62,13 +62,13 @@ function Services() {
     phone: "",
   });
 
-  const { ref: headerRef, inView: headerInView } = useInView({
+  const { ref: headerRef } = useInView({
     threshold: 0.1,
   });
-  const { ref: servicesRef, inView: servicesInView } = useInView({
+  const { ref: servicesRef } = useInView({
     threshold: 0.1,
   });
-  const { ref: formRef, inView: formInView } = useInView({ threshold: 0.1 });
+  const { ref: formRef } = useInView({ threshold: 0.1 });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
