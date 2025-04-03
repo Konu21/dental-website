@@ -1,27 +1,43 @@
 import { Grid2, Typography, Box, Button } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useTheme } from "@mui/material/styles";
+import { useInView } from "react-intersection-observer";
 
 import * as motion from "motion/react-client";
 
 function HeroSection() {
   const theme = useTheme();
+  const { ref: textRef, inView: textInView } = useInView({
+    threshold: 0.4,
+    triggerOnce: true,
+  });
+  const { ref: imageRef, inView: imageInView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
 
   return (
     <>
       <Grid2
         container
         spacing={2}
-        className="mt-5 items-center max-md:p-5 max-md:w-fit"
+        className="mt-5 lg:mx-16  items-center max-md:px-5 max-md:w-fit"
       >
         <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box className="p-2 md:p-12 flex flex-col gap-16">
+          <Box className="p-2 md:p-12 flex flex-col gap-16" ref={textRef}>
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 0.8 }}
+              initial="hidden"
+              animate={textInView ? "visible" : "hidden"}
+              variants={{
+                hidden: { x: -30, opacity: 0 }, // Reducem deplasarea inițială
+                visible: { x: 0, opacity: 1 },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                delay: 0.2,
+              }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -36,11 +52,17 @@ function HeroSection() {
               </Typography>
             </motion.div>
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              initial="hidden"
+              animate={textInView ? "visible" : "hidden"}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1 },
+              }}
+              transition={{
+                duration: 1.2,
+                ease: "easeInOut",
+                delay: 0.4,
+              }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -55,11 +77,18 @@ function HeroSection() {
               </Typography>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              exit={{ opacity: 0, y: 50 }}
-              viewport={{ margin: "-25% 0px -5% 0px", once: true }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              initial="hidden"
+              animate={textInView ? "visible" : "hidden"}
+              variants={{
+                hidden: { y: 20, opacity: 0 }, // Reducem deplasarea verticală
+                visible: { y: 0, opacity: 1 },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 15,
+                delay: 0.6,
+              }}
             >
               <Box className="flex flex-col md:flex-row gap-10">
                 <Button
@@ -121,15 +150,27 @@ function HeroSection() {
           </Box>
         </Grid2>
         <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box className="">
+          <Box ref={imageRef}>
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 2, ease: "easeInOut" }}
+              initial="hidden"
+              animate={imageInView ? "visible" : "hidden"}
+              variants={{
+                hidden: { scale: 0.97, opacity: 0 }, // Reducem scalarea inițială
+                visible: { scale: 1, opacity: 1 },
+              }}
+              transition={{
+                duration: 1.5,
+                ease: [0.33, 1, 0.68, 1], // Custom easing curve
+                delay: 0.3,
+              }}
             >
-              <img src="/avatar.png" alt="Dentist Avatar" loading="lazy" />
+              <img
+                src="/avatar.png"
+                alt="Dentist Avatar"
+                loading="lazy"
+                className="lg:w-4/5 h-auto object-cover"
+                style={{ transform: "translateZ(0)" }}
+              />
             </motion.div>
           </Box>
         </Grid2>

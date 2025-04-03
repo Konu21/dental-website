@@ -4,6 +4,7 @@ import { AnimatePresence, motion, wrap } from "motion/react";
 import { ArrowLeft, ArrowRight } from "./arrows";
 import { useTheme } from "@mui/material/styles";
 import ServiceCard from "./ServiceCard";
+import { useInView } from "react-intersection-observer";
 
 function ServicesSection() {
   const theme = useTheme();
@@ -36,70 +37,116 @@ function ServicesSection() {
     setSelectedItem(nextItem);
     setDirection(newDirection);
   }
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+  });
+  const slideTransition = {
+    type: "spring",
+    stiffness: 80,
+    damping: 20,
+    mass: 0.5,
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
   return (
     <motion.div
+      ref={ref}
       className="w-full relative flex justify-center items-center sm:p-5 md:p-15 md:rounded-[10px]"
       style={{
         backgroundColor: theme.palette.primary.light,
+        willChange: "transform, opacity",
       }}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 50 }}
-      viewport={{ margin: "-15% 0px -15% 0px", once: true }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        type: "spring",
-        duration: 0.8,
-        ease: "easeInOut",
+        ...slideTransition,
+        delay: 0.2,
       }}
+      viewport={{ margin: "-20% 0px", once: true }}
     >
       {isMobile ? (
         <Box className="flex relative justify-center items-center w-full rounded-[20px] max-w-sm h-[400px] overflow-hidden">
-          <motion.button
-            initial={false}
-            aria-label="Previous"
-            className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 left-5 -translate-y-1/2 z-10 outline-offset-2"
-            onClick={() => setSlide(-1)}
-            whileFocus={{ outline: "2px solid #0cdcf7" }}
-          >
-            <ArrowLeft />
-          </motion.button>
-          <Box className="relative w-full max-w-sm h-[400px] flex justify-center items-center overflow-hidden">
-            <AnimatePresence
-              custom={direction}
-              initial={false}
-              mode="popLayout"
+          <AnimatePresence initial={false} custom={direction}>
+            {/* Butoane */}
+            <motion.button
+              key="prev-btn"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 left-5 -translate-y-1/2 z-10"
+              onClick={() => setSlide(-1)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <motion.div
-                key={selectedItem}
-                initial={{ opacity: 0, x: direction * 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: direction * -50 }}
-                transition={{ delay: 0.2, type: "spring", bounce: 0.4 }}
-                className="absolute w-full h-full flex justify-center items-center"
+              <ArrowLeft />
+            </motion.button>
+
+            {/* Conținut slider */}
+            <Box className="relative w-full max-w-sm h-[400px] flex justify-center items-center overflow-hidden">
+              <AnimatePresence
+                custom={direction}
+                initial={false}
+                mode="popLayout"
               >
-                <ServiceCard service={services[selectedItem]} theme={theme} />
-              </motion.div>
-            </AnimatePresence>
-          </Box>
-          <motion.button
-            initial={false}
-            aria-label="Next"
-            className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 left-5 -translate-y-1/2 z-10 outline-offset-2"
-            onClick={() => setSlide(1)}
-            whileFocus={{ outline: "2px solid #0cdcf7" }}
-          >
-            <ArrowRight />
-          </motion.button>
+                <motion.div
+                  key={selectedItem}
+                  custom={direction}
+                  initial={{ opacity: 0, x: direction * 80 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { ...slideTransition, delay: 0.15 },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: direction * -80,
+                    transition: { duration: 0.3, ease: "easeIn" },
+                  }}
+                  className="absolute w-full h-full flex justify-center items-center"
+                >
+                  <ServiceCard service={services[selectedItem]} theme={theme} />
+                </motion.div>
+              </AnimatePresence>
+            </Box>
+
+            <motion.button
+              key="next-btn"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="w-10 h-10 rounded-full flex justify-center items-center top-1/2 right-5 -translate-y-1/2 z-10"
+              onClick={() => setSlide(1)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ArrowRight />
+            </motion.button>
+          </AnimatePresence>
         </Box>
       ) : (
         <Box className="w-full flex flex-wrap justify-center gap-10">
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
               className="w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-1rem)] max-w-sm"
+              variants={cardVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: index * 0.15 }}
             >
               <ServiceCard service={service} theme={theme} />
-            </div>
+            </motion.div>
           ))}
         </Box>
       )}

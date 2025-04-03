@@ -1,39 +1,97 @@
 import { Grid2, Typography, Box, Button } from "@mui/material";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import { useTheme } from "@mui/material/styles";
-import * as motion from "motion/react-client";
-
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 function WhyChooseUs() {
   const theme = useTheme();
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+    rootMargin: "-20% 0px",
+  });
   const reasons = [
-    {
-      text: "Top quality dental team",
-    },
-    {
-      text: "State of the art dental services",
-    },
-    {
-      text: "Discount on all dental treatment",
-    },
-    {
-      text: "Enrollment is quick and easy",
-    },
+    { text: "Top quality dental team" },
+    { text: "State of the art dental services" },
+    { text: "Discount on all dental treatment" },
+    { text: "Enrollment is quick and easy" },
   ];
+  const containerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+  };
+
+  const textVariants = {
+    hidden: { x: -40, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 90,
+        damping: 18,
+      },
+    },
+  };
+
+  const listItemVariants = {
+    hidden: { x: -20, opacity: 0 },
+    visible: (i: number) => ({
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.15,
+        type: "spring",
+        stiffness: 120,
+        damping: 15,
+      },
+    }),
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 1.2,
+        ease: [0.33, 1, 0.68, 1],
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 15,
+      },
+    },
+  };
   return (
     <motion.div
+      ref={ref}
       className="md:w-full p-5 flex gap-10 justify-center items-center rounded-[10px] flex-col md:flex-row"
       style={{
         backgroundColor: theme.palette.primary.light,
+        willChange: "transform, opacity",
       }}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 50 }}
-      viewport={{ margin: "-15% 0px -15% 0px", once: true }}
-      transition={{
-        type: "spring",
-        duration: 0.8,
-        ease: "easeInOut",
-      }}
+      variants={containerVariants}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
     >
       <Grid2
         container
@@ -41,32 +99,32 @@ function WhyChooseUs() {
         className="mt-5 items-center justify-center max-md:p-5"
       >
         <Grid2 size={{ md: 12, lg: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
-          <Box
-            sx={{
-              placeItems: "center",
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          <Box className="place-items-center w-full h-full">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 2, ease: "easeInOut" }}
+              variants={imageVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.3 }}
             >
-              <img src="/treatments.svg" alt="treatments" loading="lazy" />
+              <img
+                src="/treatments.svg"
+                alt="treatments"
+                loading="lazy"
+                style={{
+                  transform: "translateZ(0)",
+                  willChange: "transform, opacity, filter",
+                }}
+              />
             </motion.div>
           </Box>
         </Grid2>
         <Grid2 size={{ md: 12, lg: 6 }}>
           <Box className="p-0 md:p-12 flex flex-col gap-3.5">
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 0.8 }}
+              variants={textVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.2 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -81,11 +139,10 @@ function WhyChooseUs() {
               </Typography>
             </motion.div>
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              variants={textVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.4 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -100,30 +157,28 @@ function WhyChooseUs() {
             </motion.div>
             {reasons.map((item, id) => (
               <motion.div
-                initial={{ x: -100, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                exit={{ x: -100, opacity: 0 }}
-                viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                key={id}
+                variants={listItemVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                custom={id}
               >
                 <Typography
-                  key={id}
                   sx={{
                     ...theme.typography.body2,
                   }}
                 >
-                  <GppGoodIcon />
+                  <GppGoodIcon sx={{ verticalAlign: "middle", mr: 1 }} />
                   {item.text}
                 </Typography>
               </motion.div>
             ))}
             <Box className="flex flex-col md:flex-row gap-10">
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                viewport={{ margin: "-25% 0px -5% 0px", once: true }}
+                variants={buttonVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                transition={{ delay: 0.6 }}
               >
                 <Button
                   variant="contained"

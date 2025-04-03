@@ -2,8 +2,8 @@ import { Grid2, Typography, Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { MuiTelInput } from "mui-tel-input";
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import AboutUsSection from "./AboutUsSection";
 import WhyChooseUs from "./WhyChooseUs";
 import ColleagueSection from "./ColleagueSection";
@@ -15,44 +15,99 @@ function TeamSection() {
   const handleChange = (newValue: string) => {
     setValue(newValue);
   };
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+    rootMargin: "-15% 0px",
+  });
+  const textVariants = {
+    hidden: { x: -40, opacity: 0, rotate: -1 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        stiffness: 90,
+        damping: 18,
+      },
+    },
+  };
+
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.2,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const scaleInVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 110,
+        damping: 15,
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.92, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 1.4,
+        ease: [0.32, 0.72, 0.48, 1],
+      },
+    },
+  };
 
   return (
     <>
       <Grid2
         container
         spacing={2}
-        className="mt-5 items-center justify-center max-md:p-5 max-md:w-fit"
+        className="mt-5 lg:mx-16 items-center justify-center max-md:p-5 max-md:w-fit"
+        ref={ref}
       >
         <Grid2 size={{ md: 12, lg: 6 }}>
           <Box className="p-5 md:p-12 flex flex-col gap-16">
-            <AnimatePresence>
-              <motion.div
-                initial={{ x: -100, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                exit={{ x: -100, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ margin: "-25% 0px -25% 0px", once: true }}
+            {/* <AnimatePresence> */}
+            <motion.div
+              variants={textVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.2 }}
+            >
+              <Typography
+                className="text-center md:text-left"
+                sx={{
+                  ...theme.typography.h1,
+                  [theme.breakpoints.down("md")]: {
+                    ...theme.typography.h2,
+                  },
+                }}
               >
-                <Typography
-                  className="text-center md:text-left"
-                  sx={{
-                    ...theme.typography.h1,
-                    [theme.breakpoints.down("md")]: {
-                      ...theme.typography.h2,
-                    },
-                  }}
-                >
-                  We’re welcoming new patients and can’t wait to meet you.
-                </Typography>
-              </motion.div>
-            </AnimatePresence>
+                We’re welcoming new patients and can’t wait to meet you.
+              </Typography>
+            </motion.div>
+            {/* </AnimatePresence> */}
 
             <motion.div
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
+              variants={fadeUpVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.4 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -69,11 +124,10 @@ function TeamSection() {
 
             <Box>
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                viewport={{ margin: "-25% 0px -5% 0px", once: true }}
+                variants={scaleInVariants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                transition={{ delay: 0.6 }}
                 className="flex flex-col md:flex-row gap-5 text-center items-center self-center"
               >
                 <MuiTelInput
@@ -100,13 +154,21 @@ function TeamSection() {
         <Grid2 size={{ md: 12, lg: 6 }}>
           <Box className="place-items-center mb-10 lg:mb-0">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              viewport={{ margin: "-25% 0px -25% 0px", once: true }}
+              variants={imageVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ delay: 0.3 }}
             >
-              <img src="/patient.svg" alt="patient" loading="lazy" />
+              <img
+                src="/patient.svg"
+                alt="patient"
+                loading="lazy"
+                className="transform"
+                style={{
+                  transform: "translateZ(0)",
+                  willChange: "transform, opacity, filter",
+                }}
+              />
             </motion.div>
           </Box>
         </Grid2>

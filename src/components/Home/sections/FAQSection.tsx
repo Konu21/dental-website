@@ -5,67 +5,98 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import * as React from "react";
-import * as motion from "motion/react-client";
-
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { useTheme } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
+import { useState } from "react";
+
+const FAQ = [
+  {
+    title: "Can I see who reads my email campaigns?",
+    text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur.",
+  },
+  {
+    title: "Can I see who reads my email campaigns?",
+    text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur.",
+  },
+  {
+    title: "Can I see who reads my email campaigns?",
+    text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur.",
+  },
+  {
+    title: "Can I see who reads my email campaigns?",
+    text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur.",
+  },
+  {
+    title: "Can I see who reads my email campaigns?",
+    text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur.",
+  },
+  // ... alte întrebări
+];
+
+const titleVariants = {
+  hidden: { x: -40, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: (i: number) => ({
+    x: i % 2 === 0 ? -50 : 50,
+    opacity: 0,
+  }),
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 15,
+    },
+  },
+};
 
 function FAQSection() {
   const theme = useTheme();
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [expanded, setExpanded] = useState<string | false>(false);
+  const { ref, inView } = useInView({
+    threshold: 0.25,
+    triggerOnce: true,
+  });
 
-  const handleChange =
-    (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const handleChange = (panel: string) => (_: unknown, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
-  const FAQ = [
-    {
-      title: "Can I see who reads my email campaigns?",
-      text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur. Cras adipiscing volutpat non hac enim odio enim.",
-    },
-    {
-      title: "Do you offer non-profit discounts?",
-      text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur. Cras adipiscing volutpat non hac enim odio enim.",
-    },
-    {
-      title: "Can I see who reads my email campaigns?",
-      text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur. Cras adipiscing volutpat non hac enim odio enim.",
-    },
-    {
-      title: "Can I see who reads my email campaigns?",
-      text: "Lorem ipsum dolor sit amet consectetur. Convallis cras placerat dignissim aliquam massa. Aliquet volutpat rhoncus in convallis consectetur. Cras adipiscing volutpat non hac enim odio enim.",
-    },
-  ];
   return (
-    <Box className="flex flex-col items-center p-2 md:p-12">
-      <motion.div
-        initial={{ x: -100, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        exit={{ x: -100, opacity: 0 }}
-        viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-        transition={{ duration: 0.8 }}
-      >
+    <Box
+      ref={ref}
+      component={motion.div}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      className="flex flex-col items-center p-2 md:p-12 gap-8"
+    >
+      <motion.div variants={titleVariants}>
         <Typography
           className="text-center md:text-left"
           sx={{
             ...theme.typography.h2,
-            [theme.breakpoints.down("sm")]: {
-              ...theme.typography.h3,
-            },
+            [theme.breakpoints.down("sm")]: theme.typography.h3,
           }}
         >
-          Frequently Ask Question
+          Frequently Asked Questions
         </Typography>
       </motion.div>
-      <motion.div
-        initial={{ x: -100, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        exit={{ x: -100, opacity: 0 }}
-        viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-        transition={{ duration: 0.8 }}
-      >
+
+      <motion.div variants={titleVariants} transition={{ delay: 0.2 }}>
         <Typography
           className="text-center md:text-left"
           sx={{
@@ -77,51 +108,53 @@ function FAQSection() {
           provide the best products to our patients.
         </Typography>
       </motion.div>
-      {FAQ.map((question, index) => {
-        const isEven = index % 2 === 0;
-        return (
+
+      <Box className="w-full flex flex-col items-center gap-4">
+        {FAQ.map((question, index) => (
           <motion.div
-            className="flex justify-center"
-            key={index} // Moved key here
-            initial={{ x: isEven ? -100 : 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            exit={{ x: isEven ? -100 : 100, opacity: 0 }}
-            viewport={{ margin: "-25% 0px -25% 0px", once: true }}
-            transition={{ duration: 0.8 }}
-            // style={{ borderRadius: "40px" }} // Added width style
+            key={index}
+            custom={index}
+            variants={itemVariants}
+            className="w-full md:w-3/4 lg:w-1/2"
           >
             <Accordion
-              className="w-auto md:w-3/4 lg:w-2/4 m-2 overflow-hidden rounded-[40px]"
               expanded={expanded === `panel${index}`}
               onChange={handleChange(`panel${index}`)}
-              style={{
-                borderRadius: "40px",
-              }}
               sx={{
-                position: "unset",
-                transition: "background-color 0.3s ease",
-                backgroundColor:
+                bgcolor:
                   expanded === `panel${index}`
                     ? theme.palette.primary.main
-                    : "transparent",
-                color: expanded === `panel${index}` ? "#fff" : "inherit",
+                    : "background.paper",
+                color:
+                  expanded === `panel${index}` ? "common.white" : "inherit",
+                transition: theme.transitions.create(
+                  ["background-color", "color"],
+                  {
+                    duration: theme.transitions.duration.short,
+                  }
+                ),
               }}
+              style={{ borderRadius: "16px" }}
             >
               <AccordionSummary
-                expandIcon={<AddIcon />}
-                aria-controls={`panel${index}-content`}
-                id={`panel${index}-header`}
+                expandIcon={
+                  <motion.div
+                    animate={{ rotate: expanded === `panel${index}` ? 45 : 0 }}
+                  >
+                    <AddIcon />
+                  </motion.div>
+                }
               >
-                <Typography component="span">{question.title}</Typography>
+                <Typography variant="h6">{question.title}</Typography>
               </AccordionSummary>
 
               <AccordionDetails>
-                <Typography>{question.text}</Typography>
+                <Typography variant="body2">{question.text}</Typography>
               </AccordionDetails>
             </Accordion>
           </motion.div>
-        );
-      })}
+        ))}
+      </Box>
     </Box>
   );
 }
