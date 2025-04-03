@@ -2,7 +2,6 @@ import { Typography, Box, Grid2 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useRef } from "react";
 
 const missionParagraphs = [
   `At Northern Heights Dental, people come first. We help each of our 
@@ -52,8 +51,11 @@ const paragraphVariants = {
 
 function About() {
   const theme = useTheme();
-  const missionRef = useRef(null);
-  const isMissionInView = useInView(missionRef, { threshold: 0.1, once: true });
+  // Removed unused missionElementRef
+  const { ref: missionInViewRef, inView: isMissionInView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   return (
     <Box className="flex flex-col mt-5 lg:mx-16 items-center max-md:p-5 max-md:w-fit">
@@ -98,7 +100,7 @@ function About() {
             </Typography>
           </motion.div>
 
-          <Box ref={missionRef} className="space-y-6">
+          <Box ref={missionInViewRef} className="space-y-6">
             {missionParagraphs.map((text, index) => (
               <motion.div
                 key={index}
