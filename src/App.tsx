@@ -2,7 +2,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 // import { Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import * as motion from "motion/react-client";
+import { motion } from "framer-motion";
 
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -23,7 +23,7 @@ function App() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.8,
+                duration: 0.5,
                 ease: "easeInOut",
                 delay: 0.3,
               }}

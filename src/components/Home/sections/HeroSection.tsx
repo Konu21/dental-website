@@ -1,4 +1,4 @@
-import { Grid2, Typography, Box, Button } from "@mui/material";
+import { Grid2, Typography, Box, Button, useMediaQuery } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useTheme } from "@mui/material/styles";
 import { useInView } from "react-intersection-observer";
@@ -15,6 +15,7 @@ function HeroSection() {
     threshold: 0.3,
     triggerOnce: true,
   });
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
@@ -36,7 +37,7 @@ function HeroSection() {
                 type: "spring",
                 stiffness: 100,
                 damping: 20,
-                delay: 0.2,
+                delay: isMobile ? 0 : 0.2,
               }}
             >
               <Typography
@@ -59,9 +60,9 @@ function HeroSection() {
                 visible: { opacity: 1 },
               }}
               transition={{
-                duration: 1.2,
+                duration: isMobile ? 0.8 : 1.2,
                 ease: "easeInOut",
-                delay: 0.4,
+                delay: isMobile ? 0 : 0.4,
               }}
             >
               <Typography
@@ -87,7 +88,7 @@ function HeroSection() {
                 type: "spring",
                 stiffness: 80,
                 damping: 15,
-                delay: 0.6,
+                delay: isMobile ? 0 : 0.6,
               }}
             >
               <Box className="flex flex-col md:flex-row gap-10">
@@ -159,15 +160,17 @@ function HeroSection() {
                 visible: { scale: 1, opacity: 1 },
               }}
               transition={{
-                duration: 1.5,
+                duration: isMobile ? 0.8 : 1.5,
                 ease: [0.33, 1, 0.68, 1], // Custom easing curve
-                delay: 0.3,
+                delay: isMobile ? 0 : 0.3,
               }}
             >
               <img
                 src="/avatar.png"
                 alt="Dentist Avatar"
                 loading="lazy"
+                height={400}
+                width={400}
                 className="lg:w-4/5 h-auto object-cover"
                 style={{ transform: "translateZ(0)" }}
               />

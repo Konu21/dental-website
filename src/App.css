@@ -1,0 +1,18 @@
+/* Optimizări pentru performanță pe mobile */
+html {
+    scroll-behavior: auto !important; /* Dezactivează smooth scroll-ul nativ */
+  }
+  
+  body {
+    transform: translateZ(0); /* Activează hardware acceleration */
+    backface-visibility: hidden;
+    overflow-x: hidden;
+  }
+  
+  /* Reduceți efectele de blur și complexitate pe mobile */
+  @media (max-width: 768px) {
+    * {
+      backdrop-filter: none !important;
+      filter: none !important;
+    }
+  }

@@ -1,10 +1,11 @@
-import { Grid2, Typography, Box, Button } from "@mui/material";
+import { Grid2, Typography, Box, Button, useMediaQuery } from "@mui/material";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 function WhyChooseUs() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { ref, inView } = useInView({
     threshold: 0.25,
     triggerOnce: true,
@@ -48,7 +49,7 @@ function WhyChooseUs() {
       x: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.15,
+        delay: isMobile ? i * 0.01 : i * 0.15,
         type: "spring",
         stiffness: 120,
         damping: 15,
@@ -63,7 +64,7 @@ function WhyChooseUs() {
       scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 1.2,
+        duration: isMobile ? 0.8 : 1.2,
         ease: [0.33, 1, 0.68, 1],
       },
     },
@@ -104,7 +105,7 @@ function WhyChooseUs() {
               variants={imageVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: isMobile ? 0 : 0.3 }}
             >
               <img
                 src="/treatments.svg"
@@ -124,7 +125,7 @@ function WhyChooseUs() {
               variants={textVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: isMobile ? 0 : 0.2 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -142,7 +143,7 @@ function WhyChooseUs() {
               variants={textVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: isMobile ? 0 : 0.4 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -178,7 +179,7 @@ function WhyChooseUs() {
                 variants={buttonVariants}
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: isMobile ? 0 : 0.6 }}
               >
                 <Button
                   variant="contained"

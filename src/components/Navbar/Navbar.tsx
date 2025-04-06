@@ -48,10 +48,7 @@ function Navbar() {
           : isHome
           ? "white"
           : theme.palette.primary.main,
-        // {
-        //   xs: "transparent",
-        //   lg: theme.palette.primary.light,
-        // },
+
         boxShadow: { xs: "none" },
       }}
       className="rounded-[10px] "

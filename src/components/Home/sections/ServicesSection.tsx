@@ -1,33 +1,35 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { AnimatePresence, motion, wrap } from "motion/react";
 import { ArrowLeft, ArrowRight } from "./arrows";
 import { useTheme } from "@mui/material/styles";
 import ServiceCard from "./ServiceCard";
 import { useInView } from "react-intersection-observer";
 
-function ServicesSection() {
+const services = [
+  {
+    photo: "root_canal_treatment.svg",
+    title: "Root Canal Treatment",
+    text: "Root canal treatment (endodontics) is a dental procedure used to treat infection at the centre of a tooth.",
+    more_info_link: "link",
+  },
+  {
+    photo: "cosmetic_dentist.svg",
+    title: "Cosmetic Dentist",
+    text: "Cosmetic dentistry is the branch of dentistry that focuses on improving the appearance of your smile.",
+    more_info_link: "link",
+  },
+  {
+    photo: "dental_implants.svg",
+    title: "Dental Implants",
+    text: "A dental implant is an artificial tooth root that’s placed into your jaw to hold a prosthetic tooth or bridge.",
+    more_info_link: "link",
+  },
+];
+
+const ServicesSection = memo(function ServicesSection() {
   const theme = useTheme();
-  const services = [
-    {
-      photo: "root_canal_treatment.svg",
-      title: "Root Canal Treatment",
-      text: "Root canal treatment (endodontics) is a dental procedure used to treat infection at the centre of a tooth.",
-      more_info_link: "link",
-    },
-    {
-      photo: "cosmetic_dentist.svg",
-      title: "Cosmetic Dentist",
-      text: "Cosmetic dentistry is the branch of dentistry that focuses on improving the appearance of your smile.",
-      more_info_link: "link",
-    },
-    {
-      photo: "dental_implants.svg",
-      title: "Dental Implants",
-      text: "A dental implant is an artificial tooth root that’s placed into your jaw to hold a prosthetic tooth or bridge.",
-      more_info_link: "link",
-    },
-  ];
+
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [selectedItem, setSelectedItem] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
@@ -43,18 +45,18 @@ function ServicesSection() {
   });
   const slideTransition = {
     type: "spring",
-    stiffness: 80,
+    stiffness: 100,
     damping: 20,
     mass: 0.5,
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: isMobile ? 0.3 : 0.5,
         ease: [0.16, 1, 0.3, 1],
       },
     },
@@ -67,11 +69,11 @@ function ServicesSection() {
         backgroundColor: theme.palette.primary.light,
         willChange: "transform, opacity",
       }}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
         ...slideTransition,
-        delay: 0.2,
+        delay: isMobile ? 0 : 0.1,
       }}
       viewport={{ margin: "-20% 0px", once: true }}
     >
@@ -102,16 +104,11 @@ function ServicesSection() {
                 <motion.div
                   key={selectedItem}
                   custom={direction}
-                  initial={{ opacity: 0, x: direction * 80 }}
+                  initial={{ opacity: 0, x: direction * 60 }}
                   animate={{
                     opacity: 1,
                     x: 0,
-                    transition: { ...slideTransition, delay: 0.15 },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    x: direction * -80,
-                    transition: { duration: 0.3, ease: "easeIn" },
+                    transition: { ...slideTransition, delay: 0.1 },
                   }}
                   className="absolute w-full h-full flex justify-center items-center"
                 >
@@ -152,6 +149,6 @@ function ServicesSection() {
       )}
     </motion.div>
   );
-}
+});
 
 export default ServicesSection;

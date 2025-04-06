@@ -1,4 +1,4 @@
-import { Typography, Box, Grid2 } from "@mui/material";
+import { Typography, Box, Grid2, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -40,30 +40,30 @@ const specialists = [
   },
 ];
 
-const paragraphVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
-
 function About() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   // Removed unused missionElementRef
   const { ref: missionInViewRef, inView: isMissionInView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
-
+  const paragraphVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.2 : 0.6, ease: "easeOut" },
+    },
+  };
   return (
     <Box className="flex flex-col mt-5 lg:mx-16 items-center max-md:p-5 max-md:w-fit">
       {/* Title Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: isMobile ? 0.1 : 0.5 }}
       >
         <Typography
           sx={{
@@ -86,7 +86,7 @@ function About() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: isMobile ? 0 : 0.2 }}
           >
             <Typography
               variant="h2"
@@ -107,7 +107,7 @@ function About() {
                 variants={paragraphVariants}
                 initial="hidden"
                 animate={isMissionInView ? "visible" : "hidden"}
-                transition={{ delay: index * 0.2 }}
+                transition={{ delay: isMobile ? 0 : index * 0.2 }}
               >
                 <Typography
                   sx={{
@@ -139,7 +139,10 @@ function About() {
             alt="about-1st-photo"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{
+              duration: isMobile ? 0.4 : 0.8,
+              delay: isMobile ? 0 : 0.4,
+            }}
             className="max-w-full h-auto"
             loading="lazy"
           />
@@ -171,7 +174,7 @@ function About() {
             className="mt-10 flex flex-col md:flex-row gap-7 items-center justify-center"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.3 + 0.8 }}
+            transition={{ delay: isMobile ? 0.8 : index * 0.3 + 0.8 }}
           >
             <motion.div
               className="shrink-0 rounded-[20px] overflow-hidden"

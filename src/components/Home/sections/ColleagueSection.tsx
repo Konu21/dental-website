@@ -25,7 +25,7 @@ const colleagues = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
@@ -49,12 +49,12 @@ function AvatarCard({ service, theme }: { service: Service; theme: Theme }) {
     <motion.div
       className="flex flex-col relative text-center rounded-[10px] items-center max-w-80 h-full"
       initial={{ scale: 1 }}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.03 }}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
       >
         <img
           className="w-full h-full object-cover"
@@ -62,6 +62,8 @@ function AvatarCard({ service, theme }: { service: Service; theme: Theme }) {
           title={service.title}
           alt={service.title}
           loading="lazy"
+          width={320}
+          height={400}
           style={{ transform: "translateZ(0)" }}
         />
       </motion.div>

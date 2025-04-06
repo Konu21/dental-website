@@ -50,7 +50,7 @@ const titleVariants = {
 
 const itemVariants = {
   hidden: (i: number) => ({
-    x: i % 2 === 0 ? -50 : 50,
+    x: i % 2 === 0 ? -15 : 15,
     opacity: 0,
   }),
   visible: {

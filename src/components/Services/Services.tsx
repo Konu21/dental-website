@@ -1,14 +1,13 @@
 import { Typography, Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, lazy, Suspense, memo } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTheme } from "@mui/material/styles";
 import ServiceCard from "../Home/sections/ServiceCard";
-import ColleagueSection from "../Home/sections/ColleagueSection";
+// import ColleagueSection from "../Home/sections/ColleagueSection";
 import "./Services.css";
 
 const services = [
-  // Lista optimizată fără duplicate
   {
     photo: "root_canal_treatment.svg",
     title: "Root Canal Treatment",
@@ -34,27 +33,29 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
       when: "beforeChildren",
     },
   },
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 15, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 100 },
+    transition: { type: "spring", stiffness: 100, damping: 10 },
   },
 };
 
 const formVariants = {
-  hidden: { x: 100, opacity: 0 },
+  hidden: { x: 50, opacity: 0 },
   visible: { x: 0, opacity: 1 },
 };
-
-function Services() {
+const ColleagueSection = lazy(
+  () => import("../Home/sections/ColleagueSection")
+);
+const Services = memo(function Services() {
   const theme = useTheme();
   const [formData, setFormData] = useState({
     name: "",
@@ -174,10 +175,24 @@ function Services() {
             Request Appointment
           </Typography>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col pt-5 gap-2 space-y-4"
+          >
             {["name", "email", "phone"].map((field) => (
               <motion.div key={field} variants={itemVariants}>
                 <TextField
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      transform: "translate(0px, 8px) ",
+                      backgroundColor: theme.palette.primary.light,
+                      borderRadius: 5,
+                      height: "2em",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: theme.palette.primary.main,
+                    },
+                  }}
                   fullWidth
                   variant="outlined"
                   label={field.charAt(0).toUpperCase() + field.slice(1)}
@@ -202,6 +217,7 @@ function Services() {
                 variant="contained"
                 fullWidth
                 sx={{
+                  borderRadius: 5,
                   color: theme.palette.primary.light,
                   py: 2,
                 }}
@@ -212,9 +228,11 @@ function Services() {
           </form>
         </motion.div>
       </Box>
-      <ColleagueSection />
+      <Suspense fallback={<div className="min-h-[400px]">Loading...</div>}>
+        <ColleagueSection />
+      </Suspense>
     </motion.div>
   );
-}
+});
 
 export default Services;

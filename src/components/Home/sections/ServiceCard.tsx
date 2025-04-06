@@ -22,6 +22,9 @@ function ServiceCard({ service, theme }: { service: Service; theme: Theme }) {
       <CardMedia
         sx={{ height: "5em", width: "5em" }}
         image={service.photo}
+        component="img"
+        alt={service.title}
+        loading="lazy"
         title={service.title}
       />
       <CardContent>

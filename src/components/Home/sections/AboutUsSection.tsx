@@ -1,10 +1,12 @@
-import { Grid2, Typography, Box, Button } from "@mui/material";
+import { Grid2, Typography, Box, Button, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 function AboutUsSection() {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const { ref, inView } = useInView({
     threshold: 0.25,
     triggerOnce: true,
@@ -31,7 +33,7 @@ function AboutUsSection() {
       scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 1.2,
+        duration: isMobile ? 0.8 : 1.2,
         ease: [0.33, 1, 0.68, 1],
       },
     },
@@ -64,7 +66,7 @@ function AboutUsSection() {
               variants={textVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: isMobile ? 0 : 0.2 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -83,7 +85,7 @@ function AboutUsSection() {
               variants={textVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: isMobile ? 0 : 0.4 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -102,7 +104,7 @@ function AboutUsSection() {
                 variants={buttonVariants}
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: isMobile ? 0 : 0.6 }}
               >
                 <Button
                   variant="contained"
@@ -131,7 +133,7 @@ function AboutUsSection() {
               variants={imageVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: isMobile ? 0 : 0.3 }}
             >
               <img
                 src="/smile.svg"

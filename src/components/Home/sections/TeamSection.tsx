@@ -1,4 +1,4 @@
-import { Grid2, Typography, Box, Button } from "@mui/material";
+import { Grid2, Typography, Box, Button, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { MuiTelInput } from "mui-tel-input";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import ColleagueSection from "./ColleagueSection";
 function TeamSection() {
   const theme = useTheme();
   const [value, setValue] = useState("");
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleChange = (newValue: string) => {
     setValue(newValue);
@@ -40,7 +41,7 @@ function TeamSection() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1.2,
+        duration: isMobile ? 0.8 : 1.2,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -66,7 +67,7 @@ function TeamSection() {
       scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 1.4,
+        duration: isMobile ? 0.8 : 1.4,
         ease: [0.32, 0.72, 0.48, 1],
       },
     },
@@ -87,7 +88,7 @@ function TeamSection() {
               variants={textVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: isMobile ? 0 : 0.2 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -107,7 +108,7 @@ function TeamSection() {
               variants={fadeUpVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: isMobile ? 0 : 0.4 }}
             >
               <Typography
                 className="text-center md:text-left"
@@ -127,7 +128,7 @@ function TeamSection() {
                 variants={scaleInVariants}
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: isMobile ? 0 : 0.6 }}
                 className="flex flex-col md:flex-row gap-5 text-center items-center self-center"
               >
                 <MuiTelInput
@@ -157,7 +158,7 @@ function TeamSection() {
               variants={imageVariants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: isMobile ? 0 : 0.3 }}
             >
               <img
                 src="/patient.svg"
