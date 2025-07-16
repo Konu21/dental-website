@@ -41,6 +41,7 @@ function HeroSection() {
               }}
             >
               <Typography
+                component="h1"
                 className="text-center md:text-left"
                 sx={{
                   ...theme.typography.h1,
@@ -110,11 +111,16 @@ function HeroSection() {
                   sx={{
                     backgroundColor: "transparent",
                     borderRadius: "10px",
+                    padding: 0,
+                    minWidth: 0,
                     "&:hover": {
                       color: theme.palette.primary.light,
                       backgroundColor: "#1c82ef",
                     },
                   }}
+                  component="a"
+                  href="tel:0900-78601"
+                  aria-label="Call Dental 24H Emergency 0900-78601"
                 >
                   <PhoneIcon
                     sx={{
@@ -156,24 +162,40 @@ function HeroSection() {
               initial="hidden"
               animate={imageInView ? "visible" : "hidden"}
               variants={{
-                hidden: { scale: 0.97, opacity: 0 }, // Reducem scalarea inițială
+                hidden: { scale: 0.97, opacity: 0 },
                 visible: { scale: 1, opacity: 1 },
               }}
               transition={{
                 duration: isMobile ? 0.8 : 1.5,
-                ease: [0.33, 1, 0.68, 1], // Custom easing curve
+                ease: [0.33, 1, 0.68, 1],
                 delay: isMobile ? 0 : 0.3,
               }}
             >
-              <img
-                src="/avatar.png"
-                alt="Dentist Avatar"
-                loading="lazy"
-                height={400}
-                width={400}
-                className="lg:w-4/5 h-auto object-cover"
-                style={{ transform: "translateZ(0)" }}
-              />
+              <picture>
+                <source
+                  srcSet="/avatar.webp"
+                  type="image/webp"
+                  media="(min-width: 768px)"
+                  width="400"
+                  height="400"
+                />
+                <source
+                  srcSet="/avatar.webp"
+                  type="image/webp"
+                  media="(max-width: 767px)"
+                  width="220"
+                  height="220"
+                />
+                <img
+                  src="/avatar.png"
+                  alt="Portrait of a smiling dentist in blue uniform, dental website hero image"
+                  loading="eager"
+                  width={isMobile ? 220 : 400}
+                  height={isMobile ? 220 : 400}
+                  className="w-full max-w-xs md:max-w-md lg:w-4/5 h-auto object-cover mx-auto rounded-full shadow-lg"
+                  style={{ transform: "translateZ(0)" }}
+                />
+              </picture>
             </motion.div>
           </Box>
         </Grid2>

@@ -131,10 +131,15 @@ function TeamSection() {
                 transition={{ delay: isMobile ? 0 : 0.6 }}
                 className="flex flex-col md:flex-row gap-5 text-center items-center self-center"
               >
+                <label htmlFor="phone-input" style={{ display: "none" }}>
+                  Phone number
+                </label>
                 <MuiTelInput
+                  id="phone-input"
                   className="w-auto"
                   value={value}
                   onChange={handleChange}
+                  label="Phone number"
                 />
                 <Button
                   variant="contained"

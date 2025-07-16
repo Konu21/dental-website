@@ -145,7 +145,7 @@ function FAQSection() {
                   </motion.div>
                 }
               >
-                <Typography variant="h6">{question.title}</Typography>
+                <Typography variant="h3">{question.title}</Typography>
               </AccordionSummary>
 
               <AccordionDetails>

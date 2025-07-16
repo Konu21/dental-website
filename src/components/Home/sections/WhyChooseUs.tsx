@@ -134,6 +134,7 @@ function WhyChooseUs() {
                   [theme.breakpoints.down("md")]: {
                     ...theme.typography.h2,
                   },
+                  color: theme.palette.primary.dark,
                 }}
               >
                 Why choose Smile for all your dental treatments?
@@ -149,7 +150,7 @@ function WhyChooseUs() {
                 className="text-center md:text-left"
                 sx={{
                   ...theme.typography.body1,
-                  color: theme.palette.text.primary,
+                  color: theme.palette.primary.dark,
                 }}
               >
                 We use only the best quality materials on the market in order to
@@ -185,9 +186,11 @@ function WhyChooseUs() {
                   variant="contained"
                   sx={{
                     ...theme.typography.body2,
-                    color: theme.palette.primary.light,
+                    color: theme.palette.common.white,
                     textTransform: "none",
                     borderRadius: "10px",
+                    backgroundColor: theme.palette.primary.main,
+                    "&:hover": { backgroundColor: theme.palette.primary.dark },
                   }}
                 >
                   Book an appointment

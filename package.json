@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check:tailwind": "npx tailwindcss build src/index.css -o output.css"
+    "check:tailwind": "npx tailwindcss build src/index.css -o output.css",
+    "deploy": "npm run build && npm run preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

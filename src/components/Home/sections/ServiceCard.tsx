@@ -58,8 +58,9 @@ function ServiceCard({ service, theme }: { service: Service; theme: Theme }) {
               backgroundColor: "transparent",
             },
           }}
+          aria-label={`Learn more about ${service.title}`}
         >
-          Learn More <ArrowCircleRightIcon />
+          Learn more about {service.title} <ArrowCircleRightIcon />
         </Button>
       </CardActions>
     </Card>

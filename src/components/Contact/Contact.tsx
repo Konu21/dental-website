@@ -1,4 +1,7 @@
-import { Box, TextField, Button, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -150,12 +153,7 @@ function Contact() {
 
   return (
     <Box className="flex flex-col items-center mt-5" component="section">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: -20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
-      >
+      <motion.div ref={ref} initial={false} animate={false}>
         <Typography
           className="text-center md:text-left"
           sx={{
