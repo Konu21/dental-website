@@ -82,7 +82,11 @@ const Services = memo(function Services() {
   };
 
   return (
-    <motion.div initial="hidden" animate="visible">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      className="px-2 sm:px-4 md:px-8"
+    >
       <Box
         ref={headerRef}
         className="p-2 md:p-12 flex flex-col items-center gap-6"

@@ -106,7 +106,7 @@ function ColleagueSection() {
   return (
     <Box
       ref={ref}
-      className="w-full flex justify-center relative items-center p-5 md:p-15 md:rounded-[10px]"
+      className="w-full flex justify-center relative items-center px-2 sm:px-4 md:px-8 p-5 md:p-15 md:rounded-[10px]"
       sx={{ backgroundColor: theme.palette.primary.light }}
     >
       {isMobile ? (

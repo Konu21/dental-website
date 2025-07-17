@@ -82,7 +82,7 @@ function FAQSection() {
       component={motion.div}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="flex flex-col items-center p-2 md:p-12 gap-8"
+      className="flex flex-col items-center px-2 sm:px-4 md:px-8 p-2 md:p-12 gap-8"
     >
       <motion.div variants={titleVariants}>
         <Typography

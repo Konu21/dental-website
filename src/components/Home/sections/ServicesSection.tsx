@@ -64,7 +64,7 @@ const ServicesSection = memo(function ServicesSection() {
   return (
     <motion.div
       ref={ref}
-      className="w-full relative flex justify-center items-center sm:p-5 md:p-15 md:rounded-[10px]"
+      className="w-full relative flex justify-center items-center sm:p-5 md:p-15 md:rounded-[10px] px-2 sm:px-4 md:px-8"
       style={{
         backgroundColor: theme.palette.primary.light,
         willChange: "transform, opacity",

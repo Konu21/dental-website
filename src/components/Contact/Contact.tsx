@@ -152,7 +152,10 @@ function Contact() {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
 
   return (
-    <Box className="flex flex-col items-center mt-5" component="section">
+    <Box
+      className="flex flex-col items-center mt-5 px-2 sm:px-4 md:px-8"
+      component="section"
+    >
       <motion.div ref={ref} initial={false} animate={false}>
         <Typography
           className="text-center md:text-left"

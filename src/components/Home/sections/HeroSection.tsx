@@ -22,15 +22,63 @@ function HeroSection() {
       <Grid2
         container
         spacing={2}
-        className="mt-5 lg:mx-16  items-center max-md:px-5 max-md:w-fit"
+        className="px-2 sm:px-4 md:px-8 mt-5 lg:mx-16 items-center max-md:px-2 max-md:w-full"
       >
-        <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box className="p-2 md:p-12 flex flex-col gap-16" ref={textRef}>
+        {/* Pe mobil, imaginea deasupra textului */}
+        {isMobile && (
+          <Grid2 size={{ xs: 12 }}>
+            <Box
+              ref={imageRef}
+              className="flex justify-center items-center w-full mb-4"
+            >
+              <motion.div
+                initial="hidden"
+                animate={imageInView ? "visible" : "hidden"}
+                variants={{
+                  hidden: { scale: 0.97, opacity: 0 },
+                  visible: { scale: 1, opacity: 1 },
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.33, 1, 0.68, 1],
+                  delay: 0,
+                }}
+              >
+                <picture>
+                  <source
+                    srcSet="/avatar.webp"
+                    type="image/webp"
+                    media="(min-width: 768px)"
+                    width="400"
+                    height="400"
+                  />
+                  <img
+                    src="/avatar.webp"
+                    alt="Portrait of a smiling dentist in blue uniform, dental website hero image"
+                    loading="eager"
+                    width={isMobile ? 180 : 340}
+                    height={isMobile ? 180 : 340}
+                    className="w-full max-w-[180px] md:max-w-md lg:w-4/5 h-auto object-cover mx-auto rounded-full shadow-lg"
+                    style={{
+                      transform: "translateZ(0)",
+                      background: "#f5faff",
+                    }}
+                  />
+                </picture>
+              </motion.div>
+            </Box>
+          </Grid2>
+        )}
+        <Grid2 size={{ xs: 12, md: 12, lg: 6 }}>
+          <Box
+            className="p-2 md:p-12 flex flex-col gap-8 md:gap-16"
+            ref={textRef}
+          >
             <motion.div
               initial="hidden"
               animate={textInView ? "visible" : "hidden"}
               variants={{
-                hidden: { x: -30, opacity: 0 }, // Reducem deplasarea inițială
+                hidden: { x: -30, opacity: 0 },
                 visible: { x: 0, opacity: 1 },
               }}
               transition={{
@@ -47,6 +95,8 @@ function HeroSection() {
                   ...theme.typography.h1,
                   [theme.breakpoints.down("sm")]: {
                     ...theme.typography.h2,
+                    fontSize: "2.2rem",
+                    lineHeight: "120%",
                   },
                 }}
               >
@@ -71,6 +121,9 @@ function HeroSection() {
                 sx={{
                   ...theme.typography.body1,
                   color: theme.palette.text.primary,
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "1.1rem",
+                  },
                 }}
               >
                 We use only the best quality materials on the market in order to
@@ -82,7 +135,7 @@ function HeroSection() {
               initial="hidden"
               animate={textInView ? "visible" : "hidden"}
               variants={{
-                hidden: { y: 20, opacity: 0 }, // Reducem deplasarea verticală
+                hidden: { y: 20, opacity: 0 },
                 visible: { y: 0, opacity: 1 },
               }}
               transition={{
@@ -107,15 +160,28 @@ function HeroSection() {
                   Book an appointment
                 </Button>
                 <Button
-                  variant="text"
+                  variant="outlined"
                   sx={{
-                    backgroundColor: "transparent",
                     borderRadius: "10px",
-                    padding: 0,
-                    minWidth: 0,
+                    border: `0px solid ${theme.palette.primary.main}`,
+                    color: theme.palette.primary.main,
+                    fontWeight: 600,
+                    fontSize: isMobile ? "1rem" : "1.05rem",
+                    minWidth: isMobile ? "100%" : "fit-content",
+                    height: 56,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1,
+                    textTransform: "none",
+                    backgroundColor: "transparent",
+                    boxShadow: 1,
+                    transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
                     "&:hover": {
+                      // backgroundColor: theme.palette.primary.dark,
                       color: theme.palette.primary.light,
-                      backgroundColor: "#1c82ef",
+                      border: `2px  ${theme.palette.primary.main}`,
+                      boxShadow: 2,
                     },
                   }}
                   component="a"
@@ -126,26 +192,40 @@ function HeroSection() {
                     sx={{
                       marginRight: "0.5em",
                       borderWidth: "2px",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                       height: "2em",
                       width: "2em",
+                      color: theme.palette.primary.main,
+                      background: "transparent",
+                      transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
+                      border: `2px solid ${theme.palette.primary.main}`,
+                      "&:hover": {
+                        color: theme.palette.primary.light,
+                        background: "transparent",
+                        border: "none",
+                      },
                     }}
                   />
-                  <Box className="flex flex-col">
+                  <Box className="flex flex-col justify-center">
                     <Typography
                       sx={{
                         fontSize: "1rem",
-                        lineHeight: "155%",
-                        fontWeight: 600,
+                        lineHeight: "1.1",
+                        fontWeight: 700,
+                        letterSpacing: "0.01em",
+                        color: "inherit",
+                        transition: "color 0.2s",
                       }}
                     >
-                      Dental 24H Emergency
+                      DENTAL 24H EMERGENCY
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "1rem",
-                        lineHeight: "155%",
+                        fontSize: "0.95rem",
+                        lineHeight: "1.1",
                         fontWeight: 400,
+                        color: "inherit",
+                        transition: "color 0.2s",
                       }}
                     >
                       0900-78601
@@ -156,49 +236,48 @@ function HeroSection() {
             </motion.div>
           </Box>
         </Grid2>
-        <Grid2 size={{ md: 12, lg: 6 }}>
-          <Box ref={imageRef}>
-            <motion.div
-              initial="hidden"
-              animate={imageInView ? "visible" : "hidden"}
-              variants={{
-                hidden: { scale: 0.97, opacity: 0 },
-                visible: { scale: 1, opacity: 1 },
-              }}
-              transition={{
-                duration: isMobile ? 0.8 : 1.5,
-                ease: [0.33, 1, 0.68, 1],
-                delay: isMobile ? 0 : 0.3,
-              }}
+        {/* Pe desktop, imaginea în dreapta */}
+        {!isMobile && (
+          <Grid2 size={{ md: 12, lg: 6 }}>
+            <Box
+              ref={imageRef}
+              className="flex justify-center items-center w-full"
             >
-              <picture>
-                <source
-                  srcSet="/avatar.webp"
-                  type="image/webp"
-                  media="(min-width: 768px)"
-                  width="400"
-                  height="400"
-                />
-                <source
-                  srcSet="/avatar.webp"
-                  type="image/webp"
-                  media="(max-width: 767px)"
-                  width="220"
-                  height="220"
-                />
-                <img
-                  src="/avatar.png"
-                  alt="Portrait of a smiling dentist in blue uniform, dental website hero image"
-                  loading="eager"
-                  width={isMobile ? 220 : 400}
-                  height={isMobile ? 220 : 400}
-                  className="w-full max-w-xs md:max-w-md lg:w-4/5 h-auto object-cover mx-auto rounded-full shadow-lg"
-                  style={{ transform: "translateZ(0)" }}
-                />
-              </picture>
-            </motion.div>
-          </Box>
-        </Grid2>
+              <motion.div
+                initial="hidden"
+                animate={imageInView ? "visible" : "hidden"}
+                variants={{
+                  hidden: { scale: 0.97, opacity: 0 },
+                  visible: { scale: 1, opacity: 1 },
+                }}
+                transition={{
+                  duration: 1.5,
+                  ease: [0.33, 1, 0.68, 1],
+                  delay: 0.3,
+                }}
+              >
+                <picture>
+                  <source
+                    srcSet="/avatar.webp"
+                    type="image/webp"
+                    media="(min-width: 768px)"
+                    width="400"
+                    height="400"
+                  />
+                  <img
+                    src="/avatar.webp"
+                    alt="Portrait of a smiling dentist in blue uniform, dental website hero image"
+                    loading="eager"
+                    width={400}
+                    height={400}
+                    className="w-full max-w-xs md:max-w-md lg:w-4/5 h-auto object-cover mx-auto rounded-full shadow-lg"
+                    style={{ transform: "translateZ(0)" }}
+                  />
+                </picture>
+              </motion.div>
+            </Box>
+          </Grid2>
+        )}
       </Grid2>
     </>
   );

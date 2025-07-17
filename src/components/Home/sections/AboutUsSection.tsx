@@ -57,7 +57,7 @@ function AboutUsSection() {
       <Grid2
         container
         spacing={2}
-        className="mt-5 p-5 items-center justify-center max-md:p-5 max-md:w-fit"
+        className="px-2 sm:px-4 md:px-8 mt-5 p-5 items-center justify-center max-md:p-5 max-md:w-fit"
         ref={ref}
       >
         <Grid2 size={{ md: 12, lg: 6 }}>

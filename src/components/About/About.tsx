@@ -58,7 +58,7 @@ function About() {
     },
   };
   return (
-    <Box className="flex flex-col mt-5 lg:mx-16 items-center max-md:p-5 max-md:w-fit">
+    <Box className="flex flex-col mt-5 px-2 sm:px-4 md:px-8 items-center max-md:p-5 max-md:w-fit">
       {/* Title Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

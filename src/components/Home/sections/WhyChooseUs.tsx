@@ -85,7 +85,7 @@ function WhyChooseUs() {
   return (
     <motion.div
       ref={ref}
-      className="md:w-full p-5 flex gap-10 justify-center items-center rounded-[10px] flex-col md:flex-row"
+      className="md:w-full px-2 sm:px-4 md:px-8 p-5 flex gap-10 justify-center items-center rounded-[10px] flex-col md:flex-row"
       style={{
         backgroundColor: theme.palette.primary.light,
         willChange: "transform, opacity",
